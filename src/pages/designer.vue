@@ -23,23 +23,21 @@
 </template>
 
 <script setup lang="ts">
-import ColorSwitcher from '@/src/components/switcher/ColorSwitcher.vue'
-import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
+import ColorSwitcher from '@/components/switcher/ColorSwitcher.vue'
+import TShirtDesigner from '@/components/TShirtDesigner.vue'
 
-import MotiveSwitchers from '@/src/components/switcher/MotiveSwitcher.vue'
+import MotiveSwitchers from '@/components/switcher/MotiveSwitcher.vue'
 
 const breakpoint = useBreakpoint()
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .flex-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: auto;
-    width: 100vw;
+    @apply flex justify-between items-center w-screen;
 }
+</style>
 
+<style lang="css" scoped>
 .flex-item {
     display: flex;
     align-items: center;

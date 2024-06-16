@@ -1,5 +1,5 @@
 <template>
-    <BaseControl :items="colors">
+    <BaseControl :items="designStore.colors">
         <template #items="{ item }">
             <div
                 class="color-circle"
@@ -11,21 +11,21 @@
 </template>
 
 <script setup lang="ts">
-import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { designStore } from '~/src/stores/design'
-import type { Color } from '~/src/stores/design'
+import BaseControl from '@/components/switcher/BaseSwitcher.vue'
+import { useDesignStore } from '@/stores/design'
+import type { Color } from '@/stores/design'
+
+const designStore = useDesignStore()
 
 designStore.getColors()
 
-const colors = computed<Color[]>(() => designStore.colors.value)
-
 const setColor = (color: Color) => {
-    designStore.color.value = color
+    designStore.color = color
     designStore.updateColor()
 }
 
 const getItemClass = (color: Color): { border: string } | {} => {
-    if (designStore.color.value == color) {
+    if (color == color) {
         return { border: '4px solid #000' }
     }
     return {}
@@ -51,8 +51,8 @@ const getItemClass = (color: Color): { border: string } | {} => {
 }
 
 .color-circle:hover {
-    border-color: #000; /* Change border color on hover */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
+    border-color: #000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .color-circle.active {

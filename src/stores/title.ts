@@ -1,4 +1,4 @@
-import { designStore } from '@/src/stores/design'
+import { useDesignStore } from '@/stores/design'
 
 export type TitleObjectType = {
     title: null | string
@@ -8,6 +8,8 @@ export type TitleObjectType = {
 }
 
 export const useTitleStore = () => {
+    const designStore = useDesignStore()
+
     const route = useRoute()
 
     const titleObject = ref<TitleObjectType>({

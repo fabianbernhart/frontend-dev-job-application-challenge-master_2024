@@ -1,23 +1,16 @@
 <template>
-    <Navigation></Navigation>
-    <div class="full-width-container">
-        <NuxtPage />
-    </div>
+    <NuxtLayout>
+        <slot>
+            <NuxtPage />
+        </slot>
+    </NuxtLayout>
 </template>
 
-<script setup lang="ts">
-import Navigation from '@/src/components/Navigation.vue'
-</script>
+<script setup lang="ts"></script>
 
 <style type="text/css">
 body {
     color: black;
-}
-
-.full-width-container {
-    width: 100vw;
-    padding: 0;
-    margin: 0;
 }
 
 #app {

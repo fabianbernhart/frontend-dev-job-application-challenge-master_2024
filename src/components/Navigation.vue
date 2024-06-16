@@ -22,10 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import { designStore } from '@/src/stores/design'
-import { useTitleStore } from '@/src/stores/title'
+import { useDesignStore } from '@/stores/design'
+import { useTitleStore } from '@/stores/title'
 
 const titleStore = useTitleStore()
+
+const designStore = useDesignStore()
 
 const navigateToNewPage = () => {
     navigateTo(title.value.to)

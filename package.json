@@ -26,7 +26,6 @@
     "vue": "latest"
   },
   "dependencies": {
-    "@nuxtjs/vuetify": "^1.12.3",
     "@pinia/nuxt": "^0.4.11",
     "@vuestic/nuxt": "^1.0.20",
     "axios": "^1.7.2",

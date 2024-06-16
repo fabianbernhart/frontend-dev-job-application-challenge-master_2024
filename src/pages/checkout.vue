@@ -7,16 +7,16 @@
                     <p>
                         Motive:
                         {{
-                            designStore.motive.value
-                                ? designStore.motive.value.name
+                            designStore.motive
+                                ? designStore.motive.name
                                 : 'Not Selected'
                         }}
                     </p>
                     <p>
                         Shirt:
                         {{
-                            designStore.color.value
-                                ? designStore.color.value.name
+                            designStore.color
+                                ? designStore.color.name
                                 : 'Not selected'
                         }}
                     </p>
@@ -33,7 +33,7 @@
                     </p>
                 </div>
                 <hr />
-                <p>Total: {{ designStore.totalPrice.value }} €</p>
+                <p>Total: {{ designStore.totalPrice }} €</p>
             </div>
             <div class="flex-item card">
                 <h2>Personal Data</h2>
@@ -62,16 +62,19 @@
 </template>
 
 <script setup lang="ts">
-import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
-import { designStore } from '@/src/stores/design'
-import { validation } from '@/src/stores/validation'
+import TShirtDesigner from '@/components/TShirtDesigner.vue'
+import { useDesignStore } from '@/stores/design'
+import { validation } from '@/stores/validation'
 import { useForm } from 'vuestic-ui'
 
-const { personalData, color, createOrder, motive, updateMotive } = designStore
+const designStore = useDesignStore()
+
+const { personalData, color, createOrder, motive, updateMotive } =
+    useDesignStore()
 
 updateMotive()
 
-if (!color.value || !motive.value) {
+if (!color || !motive) {
     navigateTo('/designer')
 }
 
@@ -86,7 +89,7 @@ const nameRules = [
 
 const addressRules = [requiredRules('Address')]
 const buy = () => {
-    createOrder(designStore.personalData.value)
+    createOrder(designStore.personalData)
 }
 </script>
 

@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { designStore } from '@/src/stores/design'
+import { designStore } from '@/stores/design'
 
 const { personalData } = designStore
 

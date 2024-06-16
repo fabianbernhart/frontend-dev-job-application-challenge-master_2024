@@ -1,5 +1,5 @@
 <template>
-    <BaseControl :items="motiveList">
+    <BaseControl :items="designStore.motives">
         <template #items="{ item }">
             <div class="rounded-rectangle" @click="setMotive(item)">
                 <img
@@ -15,24 +15,25 @@
 </template>
 
 <script setup lang="ts">
-import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { designStore } from '~/src/stores/design'
-import type { Motive } from '~/src/stores/design'
+import BaseControl from '@/components/switcher/BaseSwitcher.vue'
+import { useDesignStore } from '@/stores/design'
+import type { Motive } from '@/stores/design'
+
+const designStore = useDesignStore()
+const { changeImg } = designStore
 
 designStore.getMotives()
 
-const motiveList = computed<Motive[]>(() => designStore.motives.value)
-
 const getItemClass = (motive: Motive): { border: string } | {} => {
-    if (designStore.motive.value == motive) {
+    if (designStore.motive == motive) {
         return { border: '5px solid #000' }
     }
     return {}
 }
 
 const setMotive = (motive: Motive) => {
-    designStore.motive.value = motive
-    designStore.changeImg()
+    designStore.motive = motive
+    changeImg()
 }
 </script>
 
@@ -41,7 +42,7 @@ const setMotive = (motive: Motive) => {
     width: 100px;
     height: 100px;
     margin: 5px 0;
-    border-radius: 10px; /* Adjust border-radius to control the roundness */
+    border-radius: 10px;
     border: 2px solid var(--secondary-color);
     cursor: pointer;
     display: flex;
@@ -57,8 +58,8 @@ const setMotive = (motive: Motive) => {
 }
 
 .rounded-rectangle:hover {
-    border-color: #000; /* Change border color on hover */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
+    border-color: #000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .color-circle.active {

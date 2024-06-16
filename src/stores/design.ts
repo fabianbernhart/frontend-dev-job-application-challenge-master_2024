@@ -1,6 +1,9 @@
 // stores/design.js
 import { ref, computed } from 'vue'
 import axios from 'axios'
+import { defineStore } from 'pinia'
+import type { RefSymbol } from '@vue/reactivity'
+import { da } from '@faker-js/faker'
 
 export type Motive = {
     name: string
@@ -17,7 +20,9 @@ export type Color = {
 const host = 'http://localhost:3000'
 const properties = ['--st0-color', '--st1-color', '--st2-color']
 
-export const useDesignStore = () => {
+const storeId = 'designStore'
+
+export const useDesignStore = defineStore(storeId, () => {
     const color = ref<Color | null>(null)
     const motive = ref<Motive | null>(null)
     const motives = ref<Motive[]>([])
@@ -55,14 +60,12 @@ export const useDesignStore = () => {
     }
 
     const getColors = async () => {
-        await axios
-            .get(`${host}/api/colors`)
-            .then((response) => {
-                colors.value = response.data
-            })
-            .catch((e) => {
-                console.error(e)
-            })
+        const { data } = await useFetch('/api/colors')
+
+        if (data.value == null) {
+            return
+        }
+        colors.value = data.value
 
         if (!color.value) {
             color.value = colors.value[0]
@@ -71,14 +74,12 @@ export const useDesignStore = () => {
     }
 
     const getMotives = async () => {
-        await axios
-            .get(`${host}/api/motives`)
-            .then((response) => {
-                motives.value = response.data
-            })
-            .catch((error) => {
-                console.error('Order creation failed', error)
-            })
+        const { data } = await useFetch('/api/motives')
+
+        if (data.value == null) {
+            return
+        }
+        motives.value = data.value
 
         if (!motive.value) {
             motive.value = motives.value[0]
@@ -125,21 +126,6 @@ export const useDesignStore = () => {
         return Number.parseFloat(fixedResult)
     })
 
-    const $reset = () => {
-        color.value = null
-        motive.value = null
-        motives.value = []
-        colors.value = []
-
-        motivePrice.value = 0
-        colorPrice.value = 0
-
-        personalData.value = {
-            name: '',
-            address: ''
-        }
-    }
-
     return {
         motivePrice,
         colorPrice,
@@ -154,11 +140,6 @@ export const useDesignStore = () => {
         updateMotive,
         getMotives,
         getColors,
-        createOrder,
-        $reset
+        createOrder
     }
-}
-
-const designStore = useDesignStore()
-
-export { designStore }
+})
