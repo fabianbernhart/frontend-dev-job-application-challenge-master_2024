@@ -15,7 +15,7 @@
     "@faker-js/faker": "^8.1.0",
     "@nuxt/devtools": "latest",
     "@nuxt/test-utils": "^3.13.1",
-    "@nuxtjs/tailwindcss": "^6.8.0",
+    "@nuxtjs/tailwindcss": "^6.12.1",
     "@vue/test-utils": "^2.4.6",
     "eslint": "^9.6.0",
     "happy-dom": "^14.12.3",
